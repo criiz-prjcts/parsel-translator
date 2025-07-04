@@ -1,19 +1,32 @@
 import streamlit as st
 
-# Diccionario Parsel
-TO_PARSEL = {
-    'A': 'esh',  'B': 'ch',   'C': 'eish',
-    'D': 'shi',  'E': 'ash',  'F': 'asha',
-    'G': 'ei',   'H': 'shis', 'I': 'osh',
-    'J': 'xim',  'K': 'ss',   'L': 'suh',
-    'M': 'xan',  'N': 'sh',   'O': 'ush',
-    'P': 'cah',  'Q': 'xii',  'R': 'in',
-    'S': 'shs',  'T': 'cass', 'U': 'ish',
-    'V': 'aus',  'W': 'xi',   'X': 'shh',
-    'Y': 'sss',  'Z': 'xiy'
+# Diccionarios para Parsel y Troll
+CODES = {
+    "Parsel": {
+        'A': 'esh',  'B': 'ch',   'C': 'eish',
+        'D': 'shi',  'E': 'ash',  'F': 'asha',
+        'G': 'ei',   'H': 'shis', 'I': 'osh',
+        'J': 'xim',  'K': 'ss',   'L': 'suh',
+        'M': 'xan',  'N': 'sh',   'O': 'ush',
+        'P': 'cah',  'Q': 'xii',  'R': 'in',
+        'S': 'shs',  'T': 'cass', 'U': 'ish',
+        'V': 'aus',  'W': 'xi',   'X': 'shh',
+        'Y': 'sss',  'Z': 'xiy'
+    },
+    "Troll": {
+        'A': 'oet',  'B': 'lool', 'C': 'cad',
+        'D': 'tuu',  'E': 'fno',  'F': 'oll',
+        'G': 'cawl', 'H': 'tel',  'I': 'lot',
+        'J': 'tro',  'K': 'ojt',  'L': 'rew',
+        'M': 'pit',  'N': 'graw', 'O': 'ietg',
+        'P': 'zit',  'Q': 'vlq',  'R': 'pos',
+        'S': 'velf', 'T': 'insl', 'U': 'dil',
+        'V': 'grig', 'W': 'bet',  'X': 'rot',
+        'Y': 'etss', 'Z': 'sor'
+    }
 }
 
-# Trie
+# Trie universal
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -28,14 +41,13 @@ def build_trie(mapping):
         node.letter = letter
     return root
 
-TRIE_ROOT = build_trie(TO_PARSEL)
-
-def decode_parsel(text):
+def decode_text(text, mapping):
+    trie_root = build_trie(mapping)
     text = text.lower()
     decoded = ''
     i = 0
     while i < len(text):
-        node = TRIE_ROOT
+        node = trie_root
         j = i
         match = None
         while j < len(text) and text[j] in node.children:
@@ -51,16 +63,17 @@ def decode_parsel(text):
             i += 1
     return decoded
 
-# Interfaz web
-st.title("🔓 Parsel → Español")
-st.write("Pega tu texto en Parsel abajo y obtendrás la traducción alfabética en español.")
+# Interfaz Streamlit
+st.title("🔓 Decodificador de Lenguajes Mágicos")
+st.write("Selecciona un idioma y pega el texto para decodificarlo al alfabeto latino.")
 
-entrada = st.text_area("Texto en Parsel", height=150)
+idioma = st.selectbox("Idioma", list(CODES.keys()))
+entrada = st.text_area("Texto cifrado", height=150)
 
-if st.button("Traduce"):
+if st.button("Decodificar"):
     if entrada.strip():
-        resultado = decode_parsel(entrada)
-        st.success("Resultado:")
+        resultado = decode_text(entrada, CODES[idioma])
+        st.success("Texto decodificado:")
         st.code(resultado, language="text")
     else:
-        st.warning("Por favor, introduce texto para traducir.")
+        st.warning("Por favor, introduce algún texto.")
