@@ -128,8 +128,8 @@ def encode_text(text, mapping):
     return result
 
 # Interfaz Streamlit
-st.set_page_config(page_title="Traductor de Lenguajes Fantásticos", page_icon="✨")
-st.title("✨ Traductor de Lenguajes Fantásticos")
+st.set_page_config(page_title="Traductor de Lenguajes Mágicos", page_icon="✨")
+st.title("✨ Traductor de Lenguajes Mágicos")
 
 modo = st.radio("Modo", ["Codificar (Español → Idioma mágico)", "Decodificar (Idioma mágico → Español)"])
 
