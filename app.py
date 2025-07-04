@@ -1,6 +1,6 @@
 import streamlit as st
 
-# Diccionarios para Parsel y Troll
+# Diccionarios para Parsel, Troll y Sirenio
 CODES = {
     "Parsel": {
         'A': 'esh',  'B': 'ch',   'C': 'eish',
@@ -23,6 +23,17 @@ CODES = {
         'S': 'velf', 'T': 'insl', 'U': 'dil',
         'V': 'grig', 'W': 'bet',  'X': 'rot',
         'Y': 'etss', 'Z': 'sor'
+    },
+    "Sirenio": {
+        'A': 'ogl',   'B': 'jig',   'C': 'sul',
+        'D': 'fyg',   'E': 'igl',   'F': 'tigl',
+        'G': 'fegl',  'H': 'sug',   'I': 'ugl',
+        'J': 'leg',   'K': 'jhul',  'L': 'wag',
+        'M': 'poh',   'N': 'pluh',  'Ñ': 'peeg',
+        'O': 'agl',   'P': 'degl',  'Q': 'zel',
+        'R': 'tig',   'S': 'xuu',   'T': 'geg',
+        'U': 'egl',   'V': 'dafh',  'W': 'dufh',
+        'X': 'lhh',   'Y': 'xieh',  'Z': 'welg'
     }
 }
 
@@ -64,8 +75,8 @@ def decode_text(text, mapping):
     return decoded
 
 # Interfaz Streamlit
-st.title("🔓 Decodificador de Lenguajes Mágicos")
-st.write("Selecciona un idioma y pega el texto para decodificarlo al alfabeto latino.")
+st.title("🔓 Decodificador de Lenguajes Fantásticos")
+st.write("Selecciona un idioma ficticio y pega el texto para decodificarlo al alfabeto latino.")
 
 idioma = st.selectbox("Idioma", list(CODES.keys()))
 entrada = st.text_area("Texto cifrado", height=150)
