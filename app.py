@@ -74,17 +74,31 @@ def decode_text(text, mapping):
             i += 1
     return decoded
 
+def encode_text(text, mapping):
+    result = ''
+    text = text.upper()
+    for char in text:
+        if char in mapping:
+            result += mapping[char]
+        else:
+            result += char  # conserva espacios y signos
+    return result
+
 # Interfaz Streamlit
-st.title("🔓 Decodificador de Lenguajes Fantásticos")
-st.write("Selecciona un idioma ficticio y pega el texto para decodificarlo al alfabeto latino.")
+st.title("🔄 Traductor de Lenguajes Fantásticos")
+st.write("Selecciona un idioma mágico y el modo que deseas utilizar.")
 
 idioma = st.selectbox("Idioma", list(CODES.keys()))
-entrada = st.text_area("Texto cifrado", height=150)
+modo = st.radio("Modo", ["Codificar (Español → Idioma mágico)", "Decodificar (Idioma mágico → Español)"])
+entrada = st.text_area("Texto de entrada", height=150)
 
-if st.button("Decodificar"):
-    if entrada.strip():
-        resultado = decode_text(entrada, CODES[idioma])
-        st.success("Texto decodificado:")
-        st.code(resultado, language="text")
-    else:
+if st.button("Traducir"):
+    if not entrada.strip():
         st.warning("Por favor, introduce algún texto.")
+    else:
+        if modo.startswith("Codificar"):
+            resultado = encode_text(entrada, CODES[idioma])
+        else:
+            resultado = decode_text(entrada, CODES[idioma])
+        st.success("Resultado:")
+        st.code(resultado, language="text")
