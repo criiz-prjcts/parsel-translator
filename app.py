@@ -1,6 +1,16 @@
 import streamlit as st
 
-# Diccionarios para Parsel, Troll y Sirenio
+# Idiomas mágicos con emojis
+LANG_EMOJIS = {
+    "Parsel": "🐍",
+    "Troll": "🧌",
+    "Sirenio": "🧜‍♀️",
+    "Duendigonza": "🧝🏻",
+    "Draconis": "🐉",
+    "Veela": "🧚‍♀️"
+}
+
+# Diccionarios de codificación
 CODES = {
     "Parsel": {
         'A': 'esh',  'B': 'ch',   'C': 'eish',
@@ -34,10 +44,43 @@ CODES = {
         'R': 'tig',   'S': 'xuu',   'T': 'geg',
         'U': 'egl',   'V': 'dafh',  'W': 'dufh',
         'X': 'lhh',   'Y': 'xieh',  'Z': 'welg'
+    },
+    "Duendigonza": {
+        'A': 'pot',   'B': 'uvo',   'C': 'dv',
+        'D': 'kok',   'E': 'gvc',   'F': 'bok',
+        'G': 'tup',   'H': 'qir',   'I': 'a',
+        'J': 'sks',   'K': 'vb',    'L': 'bl',
+        'M': 'num',   'N': 'pon',   'Ñ': 'peeg',
+        'O': 'ak',    'P': 'bl',    'Q': 'nxz',
+        'R': 'yuf',   'S': 'crek',  'T': 'ors',
+        'U': 'ec',    'V': 'osf',   'W': 'zok',
+        'X': 'voc',   'Y': 'ilk',   'Z': 'bgt'
+    },
+    "Draconis": {
+        'A': 'erd',   'B': 'rui',   'C': 'dro',
+        'D': 'edra',  'E': 'ard',   'F': 'ad',
+        'G': 'dir',   'H': 'udo',   'I': 'ord',
+        'J': 'dota',  'K': 'kiu',   'L': 'rad',
+        'M': 'pro',   'N': 'rer',   'Ñ': 'ruy',
+        'O': 'urd',   'P': 'dri',   'Q': 'uga',
+        'R': 'rod',   'S': 'pir',   'T': 'yerd',
+        'U': 'ird',   'V': 'rao',   'W': 'cra',
+        'X': 'da',    'Y': 'rri',   'Z': 'zrag'
+    },
+    "Veela": {
+        'A': 'laz',   'B': 'bes',   'C': 'ced',
+        'D': 'dred',  'E': 'meh',   'F': 'fae',
+        'G': 'gso',   'H': 'hal',   'I': 'isz',
+        'J': 'jod',   'K': 'kau',   'L': 'lae',
+        'M': 'miz',   'N': 'nuz',   'O': 'osl',
+        'P': 'per',   'Q': 'khoz',  'R': 'rao',
+        'S': 'sou',   'T': 'tei',   'U': 'uuz',
+        'V': 'vou',   'W': 'wuj',   'X': 'xua',
+        'Y': 'eiz',   'Z': 'aiz'
     }
 }
 
-# Trie universal
+# Trie para decodificación
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -81,15 +124,19 @@ def encode_text(text, mapping):
         if char in mapping:
             result += mapping[char]
         else:
-            result += char  # conserva espacios y signos
+            result += char
     return result
 
 # Interfaz Streamlit
-st.title("🔄 Traductor de Lenguajes Fantásticos")
-st.write("Selecciona un idioma mágico y el modo que deseas utilizar.")
+st.set_page_config(page_title="Traductor de Lenguajes Fantásticos", page_icon="✨")
+st.title("✨ Traductor de Lenguajes Fantásticos")
 
-idioma = st.selectbox("Idioma", list(CODES.keys()))
 modo = st.radio("Modo", ["Codificar (Español → Idioma mágico)", "Decodificar (Idioma mágico → Español)"])
+
+idiomas_ordenados = list(LANG_EMOJIS.keys())
+idioma_seleccionado = st.selectbox("Idioma mágico", [f"{LANG_EMOJIS[n]} {n}" for n in idiomas_ordenados])
+idioma_nombre = idioma_seleccionado.split(" ", 1)[1]
+
 entrada = st.text_area("Texto de entrada", height=150)
 
 if st.button("Traducir"):
@@ -97,8 +144,8 @@ if st.button("Traducir"):
         st.warning("Por favor, introduce algún texto.")
     else:
         if modo.startswith("Codificar"):
-            resultado = encode_text(entrada, CODES[idioma])
+            resultado = encode_text(entrada, CODES[idioma_nombre])
         else:
-            resultado = decode_text(entrada, CODES[idioma])
+            resultado = decode_text(entrada, CODES[idioma_nombre])
         st.success("Resultado:")
         st.code(resultado, language="text")
