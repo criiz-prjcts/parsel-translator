@@ -1,82 +1,66 @@
 import streamlit as st
 
-# Idiomas mágicos con emojis
+# Emojis por idioma
 LANG_EMOJIS = {
     "Parsel": "🐍",
-    "Troll": "🧌",
+    "Troll": "🪓",
     "Sirenio": "🧜‍♀️",
-    "Duendigonza": "🧝🏻",
-    "Draconis": "🐉",
-    "Veela": "🧚‍♀️"
+    "Duendigonza": "🪷",
+    "Draconis": "🏯",
+    "Veela": "🧚‍♀️",
+    "Finofaudio": "🦖"
 }
 
 # Diccionarios de codificación
 CODES = {
     "Parsel": {
-        'A': 'esh',  'B': 'ch',   'C': 'eish',
-        'D': 'shi',  'E': 'ash',  'F': 'asha',
-        'G': 'ei',   'H': 'shis', 'I': 'osh',
-        'J': 'xim',  'K': 'ss',   'L': 'suh',
-        'M': 'xan',  'N': 'sh',   'O': 'ush',
-        'P': 'cah',  'Q': 'xii',  'R': 'in',
-        'S': 'shs',  'T': 'cass', 'U': 'ish',
-        'V': 'aus',  'W': 'xi',   'X': 'shh',
-        'Y': 'sss',  'Z': 'xiy'
+        'A': 'esh', 'B': 'ch', 'C': 'eish', 'D': 'shi', 'E': 'ash', 'F': 'asha',
+        'G': 'ei', 'H': 'shis', 'I': 'osh', 'J': 'xim', 'K': 'ss', 'L': 'suh',
+        'M': 'xan', 'N': 'sh', 'O': 'ush', 'P': 'cah', 'Q': 'xii', 'R': 'in',
+        'S': 'shs', 'T': 'cass', 'U': 'ish', 'V': 'aus', 'W': 'xi', 'X': 'shh',
+        'Y': 'sss', 'Z': 'xiy'
     },
     "Troll": {
-        'A': 'oet',  'B': 'lool', 'C': 'cad',
-        'D': 'tuu',  'E': 'fno',  'F': 'oll',
-        'G': 'cawl', 'H': 'tel',  'I': 'lot',
-        'J': 'tro',  'K': 'ojt',  'L': 'rew',
-        'M': 'pit',  'N': 'graw', 'O': 'ietg',
-        'P': 'zit',  'Q': 'vlq',  'R': 'pos',
-        'S': 'velf', 'T': 'insl', 'U': 'dil',
-        'V': 'grig', 'W': 'bet',  'X': 'rot',
+        'A': 'oet', 'B': 'lool', 'C': 'cad', 'D': 'tuu', 'E': 'fno', 'F': 'oll',
+        'G': 'cawl', 'H': 'tel', 'I': 'lot', 'J': 'tro', 'K': 'ojt', 'L': 'rew',
+        'M': 'pit', 'N': 'graw', 'O': 'ietg', 'P': 'zit', 'Q': 'vlq', 'R': 'pos',
+        'S': 'velf', 'T': 'insl', 'U': 'dil', 'V': 'grig', 'W': 'bet', 'X': 'rot',
         'Y': 'etss', 'Z': 'sor'
     },
     "Sirenio": {
-        'A': 'ogl',   'B': 'jig',   'C': 'sul',
-        'D': 'fyg',   'E': 'igl',   'F': 'tigl',
-        'G': 'fegl',  'H': 'sug',   'I': 'ugl',
-        'J': 'leg',   'K': 'jhul',  'L': 'wag',
-        'M': 'poh',   'N': 'pluh',  'Ñ': 'peeg',
-        'O': 'agl',   'P': 'degl',  'Q': 'zel',
-        'R': 'tig',   'S': 'xuu',   'T': 'geg',
-        'U': 'egl',   'V': 'dafh',  'W': 'dufh',
-        'X': 'lhh',   'Y': 'xieh',  'Z': 'welg'
+        'A': 'ogl', 'B': 'jig', 'C': 'sul', 'D': 'fyg', 'E': 'igl', 'F': 'tigl',
+        'G': 'fegl', 'H': 'sug', 'I': 'ugl', 'J': 'leg', 'K': 'jhul', 'L': 'wag',
+        'M': 'poh', 'N': 'pluh', 'Ñ': 'peeg', 'O': 'agl', 'P': 'degl', 'Q': 'zel',
+        'R': 'tig', 'S': 'xuu', 'T': 'geg', 'U': 'egl', 'V': 'dafh', 'W': 'dufh',
+        'X': 'lhh', 'Y': 'xieh', 'Z': 'welg'
     },
     "Duendigonza": {
-        'A': 'pot',   'B': 'uvo',   'C': 'dv',
-        'D': 'kok',   'E': 'gvc',   'F': 'bok',
-        'G': 'tup',   'H': 'qir',   'I': 'a',
-        'J': 'sks',   'K': 'vb',    'L': 'bl',
-        'M': 'num',   'N': 'pon',   'Ñ': 'peeg',
-        'O': 'ak',    'P': 'bl',    'Q': 'nxz',
-        'R': 'yuf',   'S': 'crek',  'T': 'ors',
-        'U': 'ec',    'V': 'osf',   'W': 'zok',
-        'X': 'voc',   'Y': 'ilk',   'Z': 'bgt'
+        'A': 'pot', 'B': 'uvo', 'C': 'dv', 'D': 'kok', 'E': 'gvc', 'F': 'bok',
+        'G': 'tup', 'H': 'qir', 'I': 'a', 'J': 'sks', 'K': 'vb', 'L': 'bl',
+        'M': 'num', 'N': 'pon', 'Ñ': 'peeg', 'O': 'ak', 'P': 'bl', 'Q': 'nxz',
+        'R': 'yuf', 'S': 'crek', 'T': 'ors', 'U': 'ec', 'V': 'osf', 'W': 'zok',
+        'X': 'voc', 'Y': 'ilk', 'Z': 'bgt'
     },
     "Draconis": {
-        'A': 'erd',   'B': 'rui',   'C': 'dro',
-        'D': 'edra',  'E': 'ard',   'F': 'ad',
-        'G': 'dir',   'H': 'udo',   'I': 'ord',
-        'J': 'dota',  'K': 'kiu',   'L': 'rad',
-        'M': 'pro',   'N': 'rer',   'Ñ': 'ruy',
-        'O': 'urd',   'P': 'dri',   'Q': 'uga',
-        'R': 'rod',   'S': 'pir',   'T': 'yerd',
-        'U': 'ird',   'V': 'rao',   'W': 'cra',
-        'X': 'da',    'Y': 'rri',   'Z': 'zrag'
+        'A': 'erd', 'B': 'rui', 'C': 'dro', 'D': 'edra', 'E': 'ard', 'F': 'ad',
+        'G': 'dir', 'H': 'udo', 'I': 'ord', 'J': 'dota', 'K': 'kiu', 'L': 'rad',
+        'M': 'pro', 'N': 'rer', 'Ñ': 'ruy', 'O': 'urd', 'P': 'dri', 'Q': 'uga',
+        'R': 'rod', 'S': 'pir', 'T': 'yerd', 'U': 'ird', 'V': 'rao', 'W': 'cra',
+        'X': 'da', 'Y': 'rri', 'Z': 'zrag'
     },
     "Veela": {
-        'A': 'laz',   'B': 'bes',   'C': 'ced',
-        'D': 'dred',  'E': 'meh',   'F': 'fae',
-        'G': 'gso',   'H': 'hal',   'I': 'isz',
-        'J': 'jod',   'K': 'kau',   'L': 'lae',
-        'M': 'miz',   'N': 'nuz',   'O': 'osl',
-        'P': 'per',   'Q': 'khoz',  'R': 'rao',
-        'S': 'sou',   'T': 'tei',   'U': 'uuz',
-        'V': 'vou',   'W': 'wuj',   'X': 'xua',
-        'Y': 'eiz',   'Z': 'aiz'
+        'A': 'laz', 'B': 'bes', 'C': 'ced', 'D': 'dred', 'E': 'meh', 'F': 'fae',
+        'G': 'gso', 'H': 'hal', 'I': 'isz', 'J': 'jod', 'K': 'kau', 'L': 'lae',
+        'M': 'miz', 'N': 'nuz', 'O': 'osl', 'P': 'per', 'Q': 'khoz', 'R': 'rao',
+        'S': 'sou', 'T': 'tei', 'U': 'uuz', 'V': 'vou', 'W': 'wuj', 'X': 'xua',
+        'Y': 'eiz', 'Z': 'aiz'
+    },
+    "Finofaudio": {
+        'A': 'fi', 'B': 'fgh', 'C': 'fjd', 'D': 'fsa', 'E': 'fa', 'F': 'fre',
+        'G': 'fes', 'H': 'fag', 'I': 'fu', 'J': 'feg', 'K': 'fo', 'L': 'fffg',
+        'M': 'fur', 'N': 'fot', 'O': 'fe', 'P': 'for', 'Q': 'fafe', 'R': 'faer',
+        'S': 'fiuf', 'T': 'ful', 'U': 'fo', 'V': 'feik', 'W': 'fyw', 'X': 'feg',
+        'Y': 'feh', 'Z': 'fff'
     }
 }
 
@@ -92,7 +76,8 @@ def build_trie(mapping):
         node = root
         for char in code:
             node = node.children.setdefault(char, TrieNode())
-        node.letter = letter
+        if node.letter is None:
+            node.letter = letter  # prioriza la primera letra en caso de colisión
     return root
 
 def decode_text(text, mapping):
@@ -128,8 +113,8 @@ def encode_text(text, mapping):
     return result
 
 # Interfaz Streamlit
-st.set_page_config(page_title="Traductor de Lenguajes Mágicos", page_icon="✨")
-st.title("✨ Traductor de Lenguajes Mágicos")
+st.set_page_config(page_title="Traductor de Lenguajes Fantásticos", page_icon="✨")
+st.title("✨ Traductor de Lenguajes Fantásticos")
 
 modo = st.radio("Modo", ["Codificar (Español → Idioma mágico)", "Decodificar (Idioma mágico → Español)"])
 
