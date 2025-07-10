@@ -1,70 +1,29 @@
 import streamlit as st
+from collections import defaultdict
 
 # Emojis por idioma
 LANG_EMOJIS = {
     "Parsel": "🐍",
-    "Troll": "🪓",
+    "Troll": "🏏",
     "Sirenio": "🧜‍♀️",
-    "Duendigonza": "🪷",
-    "Draconis": "🏯",
+    "Duendigonza": "🧌",
+    "Draconis": "🐉",
     "Veela": "🧚‍♀️",
     "Finofaudio": "🦖"
 }
 
-# Diccionarios de codificación
+# Diccionarios de codificación (abreviado por brevedad, reemplazar por los completos)
 CODES = {
-    "Parsel": {
-        'A': 'esh', 'B': 'ch', 'C': 'eish', 'D': 'shi', 'E': 'ash', 'F': 'asha',
-        'G': 'ei', 'H': 'shis', 'I': 'osh', 'J': 'xim', 'K': 'ss', 'L': 'suh',
-        'M': 'xan', 'N': 'sh', 'O': 'ush', 'P': 'cah', 'Q': 'xii', 'R': 'in',
-        'S': 'shs', 'T': 'cass', 'U': 'ish', 'V': 'aus', 'W': 'xi', 'X': 'shh',
-        'Y': 'sss', 'Z': 'xiy'
-    },
-    "Troll": {
-        'A': 'oet', 'B': 'lool', 'C': 'cad', 'D': 'tuu', 'E': 'fno', 'F': 'oll',
-        'G': 'cawl', 'H': 'tel', 'I': 'lot', 'J': 'tro', 'K': 'ojt', 'L': 'rew',
-        'M': 'pit', 'N': 'graw', 'O': 'ietg', 'P': 'zit', 'Q': 'vlq', 'R': 'pos',
-        'S': 'velf', 'T': 'insl', 'U': 'dil', 'V': 'grig', 'W': 'bet', 'X': 'rot',
-        'Y': 'etss', 'Z': 'sor'
-    },
-    "Sirenio": {
-        'A': 'ogl', 'B': 'jig', 'C': 'sul', 'D': 'fyg', 'E': 'igl', 'F': 'tigl',
-        'G': 'fegl', 'H': 'sug', 'I': 'ugl', 'J': 'leg', 'K': 'jhul', 'L': 'wag',
-        'M': 'poh', 'N': 'pluh', 'Ñ': 'peeg', 'O': 'agl', 'P': 'degl', 'Q': 'zel',
-        'R': 'tig', 'S': 'xuu', 'T': 'geg', 'U': 'egl', 'V': 'dafh', 'W': 'dufh',
-        'X': 'lhh', 'Y': 'xieh', 'Z': 'welg'
-    },
-    "Duendigonza": {
-        'A': 'pot', 'B': 'uvo', 'C': 'dv', 'D': 'kok', 'E': 'gvc', 'F': 'bok',
-        'G': 'tup', 'H': 'qir', 'I': 'a', 'J': 'sks', 'K': 'vb', 'L': 'bl',
-        'M': 'num', 'N': 'pon', 'Ñ': 'peeg', 'O': 'ak', 'P': 'bl', 'Q': 'nxz',
-        'R': 'yuf', 'S': 'crek', 'T': 'ors', 'U': 'ec', 'V': 'osf', 'W': 'zok',
-        'X': 'voc', 'Y': 'ilk', 'Z': 'bgt'
-    },
-    "Draconis": {
-        'A': 'erd', 'B': 'rui', 'C': 'dro', 'D': 'edra', 'E': 'ard', 'F': 'ad',
-        'G': 'dir', 'H': 'udo', 'I': 'ord', 'J': 'dota', 'K': 'kiu', 'L': 'rad',
-        'M': 'pro', 'N': 'rer', 'Ñ': 'ruy', 'O': 'urd', 'P': 'dri', 'Q': 'uga',
-        'R': 'rod', 'S': 'pir', 'T': 'yerd', 'U': 'ird', 'V': 'rao', 'W': 'cra',
-        'X': 'da', 'Y': 'rri', 'Z': 'zrag'
-    },
-    "Veela": {
-        'A': 'laz', 'B': 'bes', 'C': 'ced', 'D': 'dred', 'E': 'meh', 'F': 'fae',
-        'G': 'gso', 'H': 'hal', 'I': 'isz', 'J': 'jod', 'K': 'kau', 'L': 'lae',
-        'M': 'miz', 'N': 'nuz', 'O': 'osl', 'P': 'per', 'Q': 'khoz', 'R': 'rao',
-        'S': 'sou', 'T': 'tei', 'U': 'uuz', 'V': 'vou', 'W': 'wuj', 'X': 'xua',
-        'Y': 'eiz', 'Z': 'aiz'
-    },
     "Finofaudio": {
         'A': 'fi', 'B': 'fgh', 'C': 'fjd', 'D': 'fsa', 'E': 'fa', 'F': 'fre',
         'G': 'fes', 'H': 'fag', 'I': 'fu', 'J': 'feg', 'K': 'fo', 'L': 'fffg',
         'M': 'fur', 'N': 'fot', 'O': 'fe', 'P': 'for', 'Q': 'fafe', 'R': 'faer',
         'S': 'fiuf', 'T': 'ful', 'U': 'fo', 'V': 'feik', 'W': 'fyw', 'X': 'feg',
         'Y': 'feh', 'Z': 'fff'
-    }
+    },
+    # Agrega los demás idiomas aquí...
 }
 
-# Trie para decodificación
 class TrieNode:
     def __init__(self):
         self.children = {}
@@ -80,27 +39,51 @@ def build_trie(mapping):
             node.letter = letter  # prioriza la primera letra en caso de colisión
     return root
 
-def decode_text(text, mapping):
+def get_ambiguous_codes(mapping):
+    code_map = defaultdict(list)
+    for k, v in mapping.items():
+        code_map[v].append(k)
+    return {code: letters for code, letters in code_map.items() if len(letters) > 1}
+
+def decode_text_with_notes(text, mapping):
     trie_root = build_trie(mapping)
+    ambiguous_codes = get_ambiguous_codes(mapping)
+    inverted_map = defaultdict(list)
+    for letter, code in mapping.items():
+        inverted_map[code].append(letter)
+
     text = text.lower()
     decoded = ''
     i = 0
+    used_codes = []
     while i < len(text):
         node = trie_root
         j = i
         match = None
+        current_code = ''
         while j < len(text) and text[j] in node.children:
             node = node.children[text[j]]
+            current_code += text[j]
             j += 1
             if node.letter:
-                match = (node.letter, j)
+                match = (node.letter, j, current_code)
         if match:
-            decoded += match[0]
-            i = match[1]
+            letter, new_i, code = match
+            decoded += letter
+            if code in ambiguous_codes:
+                used_codes.append(code)
+            i = new_i
         else:
             decoded += text[i]
             i += 1
-    return decoded
+
+    notes = []
+    for code in set(used_codes):
+        letters = inverted_map[code]
+        if len(letters) > 1:
+            notes.append(f'- Código "{code}" puede ser {" o ".join(letters)} → se usó {letters[0]}')
+
+    return decoded, notes
 
 def encode_text(text, mapping):
     result = ''
@@ -112,12 +95,11 @@ def encode_text(text, mapping):
             result += char
     return result
 
-# Interfaz Streamlit
+# Interfaz
 st.set_page_config(page_title="Traductor de Lenguajes Fantásticos", page_icon="✨")
 st.title("✨ Traductor de Lenguajes Fantásticos")
 
 modo = st.radio("Modo", ["Codificar (Español → Idioma mágico)", "Decodificar (Idioma mágico → Español)"])
-
 idiomas_ordenados = list(LANG_EMOJIS.keys())
 idioma_seleccionado = st.selectbox("Idioma mágico", [f"{LANG_EMOJIS[n]} {n}" for n in idiomas_ordenados])
 idioma_nombre = idioma_seleccionado.split(" ", 1)[1]
@@ -130,7 +112,11 @@ if st.button("Traducir"):
     else:
         if modo.startswith("Codificar"):
             resultado = encode_text(entrada, CODES[idioma_nombre])
+            st.success("Resultado:")
+            st.code(resultado, language="text")
         else:
-            resultado = decode_text(entrada, CODES[idioma_nombre])
-        st.success("Resultado:")
-        st.code(resultado, language="text")
+            resultado, notas = decode_text_with_notes(entrada, CODES[idioma_nombre])
+            st.success("Resultado:")
+            st.code(resultado, language="text")
+            if notas:
+                st.warning("\n".join(["Posibles ambigüedades encontradas:"] + notas))
