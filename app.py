@@ -81,10 +81,14 @@ def get_ambiguous_codes(mapping):
     return {code: letters for code, letters in code_map.items() if len(letters) > 1}
 
 def decode_text_with_notes(text, mapping):
-    trie_root = build_trie(mapping)
-    ambiguous_codes = get_ambiguous_codes(mapping)
+    # Normalizar el mapping a minúsculas para coincidencias robustas
+    lower_mapping = {k.upper(): v.lower() for k, v in mapping.items()}
+    trie_root = build_trie(lower_mapping)
+    ambiguous_codes = get_ambiguous_codes(lower_mapping)
+
+    # Generar mapa invertido
     inverted_map = defaultdict(list)
-    for letter, code in mapping.items():
+    for letter, code in lower_mapping.items():
         inverted_map[code].append(letter)
 
     text = text.lower()
